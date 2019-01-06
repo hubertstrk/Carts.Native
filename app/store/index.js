@@ -7,6 +7,8 @@ const store = new Vuex.Store({
   state: {
     groceries: [],
     matters: [],
+    currentGrocery: '',
+    currentMatter: ''
   },
   mutations: {
     setGroceries (state, items) {
@@ -15,9 +17,12 @@ const store = new Vuex.Store({
     addGrocery (state, item) {
       state.groceries.push(item)
     },
-    removeGrocery (state, item) {
-      const index = state.groceries.findIndex(x => x.id === item.id)
+    removeGrocery (state, id) {
+      const index = state.groceries.findIndex(x => x.id === id)
       state.groceries.splice(index, 1)
+    },
+    setCurrentGrocery (state, text) {
+      state.currentGrocery = text
     },
     setMatters (state, items) {
       state.matters = items
@@ -25,9 +30,12 @@ const store = new Vuex.Store({
     addMatter (state, item) {
       state.matters.push(item)
     },
-    removeMatter (state, item) {
-      const index = state.matters.findIndex(x => x.id === item.id)
+    removeMatter (state, id) {
+      const index = state.matters.findIndex(x => x.id === id)
       state.matters.splice(index, 1)
+    },
+    setCurrentMatter (state, text) {
+      state.currentMatter = text
     }
   },
   actions: {
@@ -44,19 +52,39 @@ const store = new Vuex.Store({
         {id: 3, name: 'Milch'},
         {id: 4, name: 'Kaba'},
         {id: 5, name: 'Brot'},
-        {id: 6, name: 'Zucker'}
+        {id: 6, name: 'Zucker'},
+        {id: 7, name: 'Kartoffeln'},
+        {id: 8, name: 'Kartoffelkloßteig'}
       ]
       commit('setGroceries', items)
     },
     loadMatters ({commit}) {
       const items = [
-        {id: 3, name: 'Elektriker anrufen'},
-        {id: 5, name: 'Mieter rauswerfen'},
-        {id: 6, name: 'Haus bauen'},
-        {id: 7, name: 'Körper entschlacken'},
-        {id: 7, name: 'Papa Auto saugen'}
+        {id: 13, name: 'Elektriker anrufen'},
+        {id: 15, name: 'Mieter rauswerfen'},
+        {id: 16, name: 'Haus bauen'}
       ]
       commit('setMatters', items)
+    },
+    addCurrentGrocery ({state, commit}) {
+      const grocery = {
+        name: state.currentGrocery,
+        id: Math.floor((Math.random() * 65000) + 1)
+      }
+      commit('addGrocery', grocery)
+    },
+    addCurrentMatter ({state, commit}) {
+      const matter = {
+        name: state.currentMatter,
+        id: Math.floor((Math.random() * 65000) + 1)
+      }
+      commit('addMatter', matter)
+    },
+    removeGrocery ({commit}, id) {
+      commit('removeGrocery', id)
+    },
+    removeMatter ({commit}, id) {
+      commit('removeMatter', id)
     }
   }
 })
