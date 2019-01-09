@@ -1,20 +1,19 @@
 <template>
-  <Page actionBarHidden="true">
-    <TabView :selectedIndex="selectedIndex">
+  <!-- <Page actionBarHidden="true"> -->
+  <Page class="page">
+    <ActionBar title="Carts">
+      <ActionItem @tap="onNewItem" 
+        text="Neuer Eintrag" />
+    </ActionBar>
+    <TabView :selectedIndex="selectedIndex" @selectedIndexChange="selectedIndexChange">
       <TabViewItem title="Einkaufsliste">
         <ScrollView orientation="vertical">
-          <StackLayout rows="0" columns="0">
-            <TextField v-model="currentGrocery" @returnPress="addCurrentGrocery()" />
-            <BasicList :items="groceries" @delete="removeGrocery" />
-          </StackLayout>
+          <BasicList :items="groceries" @delete="removeGrocery" />
         </ScrollView>
       </TabViewItem>
       <TabViewItem title="Sonstiges">
         <ScrollView orientation="vertical">
-          <StackLayout rows="0" columns="0">
-            <TextField v-model="currentMatter" @returnPress="addCurrentMatter()" />
-            <BasicList :items="matters" @delete="removeMatter" />
-          </StackLayout>
+          <BasicList :items="matters" @delete="removeMatter" />
         </ScrollView>
       </TabViewItem>
     </TabView>
@@ -45,28 +44,45 @@ export default {
       set (value) {this.$store.commit('setCurrentGrocery', value)}
     },
     currentMatter: {
-      get () {return this.$store.state.currentMatter},
+      get () {return this.$store.state.currentMatter.sort()},
       set (value) {this.$store.commit('setCurrentMatter', value)}
     }
   },
   methods: {
+    selectedIndexChange (index) {
+      this.selectedIndex = index.value
+    },
     removeGrocery (id) {
       this.$store.commit('removeGrocery', id)
     },
     removeMatter (id) {
       this.$store.commit('removeMatter', id)
     },
-    addCurrentGrocery () {
+    addCurrentGrocery (name) {
+      this.currentGrocery = name
       this.$store.dispatch('addCurrentGrocery')
       .then(() => {
         this.currenGrocery = ''
       })
     },
-    addCurrentMatter () {
+    addCurrentMatter (name) {
+      this.currentMatter = name
       this.$store.dispatch('addCurrentMatter')
       .then(() => {
         this.currentMatter = ''
       })
+    },
+    onNewItem () {
+      prompt({
+        title: 'Was muss denn noch gemacht werden?',
+        message: '',
+        okButtonText: "Los geht's",
+        cancelButtonText: 'Lieber doch nicht',
+        defaultText: '',
+      }).then(result => {
+        if (!result.result) return
+        return this.selectedIndex === 0 ? this.addCurrentGrocery(result.text) : this.addCurrentMatter(result.text)
+      });
     }
   },
   mounted () {

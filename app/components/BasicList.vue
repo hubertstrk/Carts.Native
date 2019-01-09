@@ -1,22 +1,22 @@
 <template>
   <WrapLayout style="margin-top: 10px;">
-    <StackLayout v-for="item in items" :key="item.id">
+    <StackLayout v-for="item in sortedItems" :key="item.id">
       <Chip :text="item.name" @delete="deleteItem(item.id)"/>
     </StackLayout>
   </WrapLayout>
 </template>
 
 <script>
-
+import _ from 'lodash'
 import Chip from './Chip'
 
 export default {
   props: {
     items: null
   },
-  data () {
-    return {
-      textFieldValue: ''
+  computed: {
+    sortedItems () {
+      return _.sortBy(this.items, ['name'])
     }
   },
   methods: {

@@ -1,8 +1,8 @@
 <template>
-  <GridLayout class="chip" columns="auto, 20" rows="auto" backgroundColor="#53ba82">
-    <Label row="0" col="0" :text="text" verticalAlignment="center" backgroundColor="#53ba82"/>
-    <Label row="0" col="1" class="fas" horizontalAlignment="right" verticalAlignment="center" backgroundColor="#53ba82" :text="'\uf00d'" @tap="onDelete()" />
-  </GridLayout>
+  <StackLayout class="chip" orientation="horizontal" backgroundColor="#43b883">
+    <Label class="chip-label" :text="text" />
+    <Label class="chip-image fas" :text="'\uf00d'" @tap="onDelete()" />
+  </StackLayout>
 </template>
 
 <script>
@@ -20,21 +20,23 @@ export default {
 
 <style lang="css" scoped>
 .chip {
-  padding: 8px;
-  margin: 4px;
-  border-radius: 8px;
+  padding: 8;
+  margin: 4;
+  border-radius: 10;
 }
 
-.far {
-  font-family: Font Awesome 5 Brands, fa-regular-400;
-  color: #3f3f3f;
+.chip-label {
+  font-size: 16; 
+  vertical-align: center;
+  background-color: #43b883;
+  width: auto;
 }
-.fas {
-  font-family: Font Awesome 5 Brands, fa-solid-900;
-  color: #3f3f3f;
-}
-.fab {
-  font-family: Font Awesome 5 Brands, fa-brands-400;
-  color: #3f3f3f;
+
+.chip-image {
+  font-size: 16; 
+  margin-left: 5; 
+  vertical-align: center;
+  background-color: #43b883;
+  width: auto;
 }
 </style>

@@ -71,14 +71,18 @@ const store = new Vuex.Store({
         name: state.currentGrocery,
         id: Math.floor((Math.random() * 65000) + 1)
       }
-      commit('addGrocery', grocery)
+      if (grocery.name || grocery.name !== '') {
+        commit('addGrocery', grocery)
+      }
     },
     addCurrentMatter ({state, commit}) {
       const matter = {
         name: state.currentMatter,
         id: Math.floor((Math.random() * 65000) + 1)
       }
-      commit('addMatter', matter)
+      if (matter.name || matter.name !== '') {
+        commit('addMatter', matter)
+      }
     },
     removeGrocery ({commit}, id) {
       commit('removeGrocery', id)
