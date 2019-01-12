@@ -1,5 +1,4 @@
 <template>
-  <!-- <Page actionBarHidden="true"> -->
   <Page class="page">
     <ActionBar title="Carts">
       <ActionItem @tap="onNewItem" 
@@ -30,7 +29,6 @@ export default {
   },
   data () {
     return {
-      selectedIndex: 0,
       gripes: [
         'Das kann ja was werden...',
         'Na gut',
@@ -75,11 +73,14 @@ export default {
     },
     itemCount () {
       return this.selectedIndex === 0 ? this.groceries.length : this.matters.length
+    },
+    selectedIndex () {
+      return this.$store.state.selectedPage
     }
   },
   methods: {
     selectedIndexChange (index) {
-      this.selectedIndex = index.value
+      this.$store.commit('setSelectedPage', index)
     },
     removeGrocery (id) {
       this.$store.dispatch('removeGrocery', id)

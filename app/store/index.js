@@ -12,7 +12,8 @@ const store = new Vuex.Store({
     groceries: [],
     matters: [],
     currentGrocery: '',
-    currentMatter: ''
+    currentMatter: '',
+    selectedPage: 0
   },
   mutations: {
     setGroceries (state, items) {
@@ -40,6 +41,9 @@ const store = new Vuex.Store({
     },
     setCurrentMatter (state, text) {
       state.currentMatter = text
+    },
+    setSelectedPage (state, index) {
+      state.selectedPage = index
     }
   },
   actions: {
