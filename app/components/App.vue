@@ -21,6 +21,7 @@
 </template>
 
 <script>
+import * as Toast from 'nativescript-toast';
 import BasicList from './BasicList'
 
 export default {
@@ -29,7 +30,32 @@ export default {
   },
   data () {
     return {
-      selectedIndex: 0
+      selectedIndex: 0,
+      gripes: [
+        'Das kann ja was werden...',
+        'Na gut',
+        'Packen wir\'s an',
+        'Brauchen wir das wirklich?',
+        'Unbedingt!',
+        'Los geht\'s',
+        'Hört sich gut an',
+        'Sehr gut',
+        'Weiter so',
+        'Da läuft einem ja das Wasser im Mund zusammen',
+        'Diese App kann mehrere tausend Einträge speichern'
+      ],
+      gripesAmount: [
+        'Viel mehr sollt es dann aber nicht werden',
+        'Ob das noch alles ins Auto passt?',
+        'Vielleicht kann man sich das auch liefern lassen?',
+        'Diese Online Supermärkte sollen ganz gut sein',
+        'Ich bin zwar eine Maschiene, aber alles kann ich auch nicht',
+        'Gut, ich hol dann mal den Anhänger',
+        'Hatten die bei der Autovermietung auch Kombis?',
+        'Wenn du so weiter machts kannst du das Handy als Handwärmer benutzen',
+        'Overflow, overflow, devision by zero...',
+        'Defcon 2, Mobilisierung der Reserver'
+      ]
     }
   },
   computed: {
@@ -46,6 +72,9 @@ export default {
     currentMatter: {
       get () {return this.$store.state.currentMatter.sort()},
       set (value) {this.$store.commit('setCurrentMatter', value)}
+    },
+    itemCount () {
+      return this.selectedIndex === 0 ? this.groceries.length : this.matters.length
     }
   },
   methods: {
@@ -53,24 +82,35 @@ export default {
       this.selectedIndex = index.value
     },
     removeGrocery (id) {
-      this.$store.commit('removeGrocery', id)
+      this.$store.dispatch('removeGrocery', id)
     },
     removeMatter (id) {
-      this.$store.commit('removeMatter', id)
+      this.$store.dispatch('removeMatter', id)
     },
     addCurrentGrocery (name) {
       this.currentGrocery = name
-      this.$store.dispatch('addCurrentGrocery')
+      return this.$store.dispatch('addCurrentGrocery')
       .then(() => {
         this.currenGrocery = ''
       })
     },
     addCurrentMatter (name) {
       this.currentMatter = name
-      this.$store.dispatch('addCurrentMatter')
+      return this.$store.dispatch('addCurrentMatter')
       .then(() => {
         this.currentMatter = ''
       })
+    },
+    gripe () {
+      const random = Math.floor(Math.random() * this.gripes.length)
+      return this.gripes[random]
+    },
+    gripeAmount () {
+      const random = Math.floor(Math.random() * this.gripesAmount.length)
+      return this.gripesAmount[random]
+    },
+    currentGripe () {
+      return this.itemCount > 20 ? this.gripeAmount() : this.gripe()
     },
     onNewItem () {
       prompt({
@@ -81,8 +121,12 @@ export default {
         defaultText: '',
       }).then(result => {
         if (!result.result) return
-        return this.selectedIndex === 0 ? this.addCurrentGrocery(result.text) : this.addCurrentMatter(result.text)
-      });
+        const action = this.selectedIndex === 0 ? this.addCurrentGrocery(result.text) : this.addCurrentMatter(result.text)
+        action.then(() => {
+          var toast = Toast.makeText(this.currentGripe())
+          toast.show()
+        })
+      })
     }
   },
   mounted () {

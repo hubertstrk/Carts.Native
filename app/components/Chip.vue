@@ -20,21 +20,22 @@ export default {
 
 <style lang="css" scoped>
 .chip {
-  padding: 8;
+  padding: 6;
   margin: 4;
   border-radius: 10;
 }
 
 .chip-label {
-  font-size: 16; 
+  font-size: 14; 
   vertical-align: center;
   background-color: #43b883;
   width: auto;
 }
 
 .chip-image {
-  font-size: 16; 
-  margin-left: 5; 
+  font-size: 14; 
+  margin-left: 5;
+  margin-right: 3;
   vertical-align: center;
   background-color: #43b883;
   width: auto;
