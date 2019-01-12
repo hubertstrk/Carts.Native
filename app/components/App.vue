@@ -46,13 +46,13 @@ export default {
         'Viel mehr sollt es dann aber nicht werden',
         'Ob das noch alles ins Auto passt?',
         'Vielleicht kann man sich das auch liefern lassen?',
-        'Diese Online Supermärkte sollen ganz gut sein',
+        'Hmm, diese Online Supermärkte sollen ganz gut sein',
         'Ich bin zwar eine Maschiene, aber alles kann ich auch nicht',
         'Gut, ich hol dann mal den Anhänger',
         'Hatten die bei der Autovermietung auch Kombis?',
         'Wenn du so weiter machts kannst du das Handy als Handwärmer benutzen',
         'Overflow, overflow, devision by zero...',
-        'Defcon 2, Mobilisierung der Reserver'
+        'Defcon 2, Mobilisierung der Reserve'
       ]
     }
   },
